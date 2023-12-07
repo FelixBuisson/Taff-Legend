@@ -473,12 +473,13 @@ MonoBehaviour:
   smoothMotion: 1
   hook: {fileID: 216063070}
   hookSize: 0.1
-  hookPower: 5
+  hookPower: 1
   hookPullPower: 0.01
   hookGravityPower: 0.005
-  hookDegradation: 2
+  hookDegradation: 1
   hookSpriteRenderer: {fileID: 216063071}
   ProgressBarContainer: {fileID: 1134352635}
+  failTimer: 30
 --- !u!1 &578545338
 GameObject:
   m_ObjectHideFlags: 0

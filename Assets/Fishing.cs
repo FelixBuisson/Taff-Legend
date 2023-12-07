@@ -16,17 +16,17 @@ public class Fishing : MonoBehaviour
     [SerializeField] float timerMultiplicator = 3f;
 
     float fishSpeed;
-    [SerializeField] float smoothMotion = 1;
+    [SerializeField] float smoothMotion;
 
     [SerializeField] Transform hook;
     float hookPosition;
-    [SerializeField] float hookSize = 0.1f;
-    [SerializeField] float hookPower = 5f;
+    [SerializeField] float hookSize;
+    [SerializeField] float hookPower;
     float hookProgress;
     float hookPullVeloc;
     [SerializeField] float hookPullPower = 0.01f;
     [SerializeField] float hookGravityPower = 0.005f;
-    [SerializeField] float hookDegradation = 0.1f;
+    [SerializeField] public float hookDegradation;
 
     [SerializeField] SpriteRenderer hookSpriteRenderer;
 
@@ -34,7 +34,7 @@ public class Fishing : MonoBehaviour
 
     bool pause = false;
 
-    [SerializeField] float failTimer = 10f;
+    [SerializeField] float failTimer = 30f;
 
     private void Start()
     {
@@ -55,6 +55,11 @@ public class Fishing : MonoBehaviour
     private void Update()
     {
         if (pause) { return; }
+
+        //smoothMotion = 0.1f;
+        //hookDegradation = 1f;
+        //hookPower = 1f;
+        //hookSize = 0.1f;
 
         Fish();
         Hook();
