@@ -56,11 +56,7 @@ public class Fishing : MonoBehaviour
     {
         if (pause) { return; }
 
-        //smoothMotion = 0.1f;
-        //hookDegradation = 1f;
-        //hookPower = 1f;
-        //hookSize = 0.1f;
-
+        Randomize();
         Fish();
         Hook();
         ProgressCheck();
@@ -123,6 +119,14 @@ public class Fishing : MonoBehaviour
         }
 
         hookProgress = Mathf.Clamp(hookProgress, 0f, 1f);
+    }
+
+    void Randomize()
+    {
+        //smoothMotion = RANDOMIZE;
+        //hookDegradation = RANDOMIZE;
+        //hookPower = RANDOMIZE;
+        //hookSize = RANDOMIZE;
     }
 
     private void Catched()
