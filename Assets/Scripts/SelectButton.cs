@@ -4,9 +4,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FishSelectButton : MonoBehaviour
+public class SelectButton : MonoBehaviour
 {
     [SerializeField] private Fishs fish;
+    [SerializeField] private FishingRods rod;
     private SelectionMenu select;
 
     void Start()
@@ -14,8 +15,9 @@ public class FishSelectButton : MonoBehaviour
         select = SelectionMenu.Instance;
     }
 
-    public void SelectFish()
+    public void Select()
     {
-        select.fish = fish;
+        if (fish) select.fish = fish;
+        if (rod) select.rod = rod;
     }
 }

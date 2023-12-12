@@ -19,8 +19,6 @@ public class Fishing : MonoBehaviour
 
     [SerializeField] Transform hook;
     float hookPosition;
-    [SerializeField] public float hookSize;
-    [SerializeField] public float hookPower;
     float hookProgress;
     float hookPullVeloc;
     [SerializeField] float hookPullPower = 0.01f;
@@ -48,7 +46,7 @@ public class Fishing : MonoBehaviour
         float ySize = b.size.y;
         Vector3 ls = hook.localScale;
         float distance = Vector3.Distance(PivotTop.position, PivotBottom.position);
-        ls.y = (distance / ySize * hookSize);
+        ls.y = (distance / ySize * select.rod.size);
         hook.localScale = ls;
     }
 
@@ -82,14 +80,14 @@ public class Fishing : MonoBehaviour
 
         hookPosition += hookPullVeloc;
 
-        if (hookPosition - hookSize / 2 < 0f && hookPullVeloc < 0f) {
+        if (hookPosition - select.rod.size / 2 < 0f && hookPullVeloc < 0f) {
             hookPullVeloc = 0f;
         }
-        if (hookPosition + hookSize / 2 >= 1f && hookPullVeloc > 0f) {
+        if (hookPosition + select.rod.size / 2 >= 1f && hookPullVeloc > 0f) {
             hookPullVeloc = 0f;
         }
 
-        hookPosition = Mathf.Clamp(hookPosition, hookSize/2, 1 - hookSize/2);
+        hookPosition = Mathf.Clamp(hookPosition, select.rod.size/2, 1 - select.rod.size/2);
         hook.position = Vector3.Lerp(PivotBottom.position, PivotTop.position, hookPosition);
     }
 
@@ -99,11 +97,11 @@ public class Fishing : MonoBehaviour
         ls.y = hookProgress;
         ProgressBarContainer.localScale = ls;
 
-        float min = hookPosition - hookSize / 2;
-        float max = hookPosition + hookSize / 2;
+        float min = hookPosition - select.rod.size / 2;
+        float max = hookPosition + select.rod.size / 2;
 
         if (min < fishPosition && fishPosition < max) {
-            hookProgress += hookPower * Time.deltaTime;
+            hookProgress += select.rod.power * Time.deltaTime;
         } else {
             hookProgress -= select.fish.endurance * Time.deltaTime;
 
