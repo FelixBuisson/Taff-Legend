@@ -16,17 +16,15 @@ public class Fishing : MonoBehaviour
     [SerializeField] float timerMultiplicator = 3f;
 
     float fishSpeed;
-    [SerializeField] float smoothMotion;
 
     [SerializeField] Transform hook;
     float hookPosition;
-    [SerializeField] float hookSize;
-    [SerializeField] float hookPower;
+    [SerializeField] public float hookSize;
+    [SerializeField] public float hookPower;
     float hookProgress;
     float hookPullVeloc;
     [SerializeField] float hookPullPower = 0.01f;
     [SerializeField] float hookGravityPower = 0.005f;
-    [SerializeField] public float hookDegradation;
 
     [SerializeField] SpriteRenderer hookSpriteRenderer;
 
@@ -34,12 +32,14 @@ public class Fishing : MonoBehaviour
 
     bool pause = false;
 
-    [SerializeField] float failTimer = 30f;
+    [SerializeField] float failTimer = 60f;
+
+    private SelectionMenu select;
 
     private void Start()
     {
-        //Resize(); Scale Y HookZone = 0.2909091
         hookPosition = 3f;
+        select = SelectionMenu.Instance;
     }
 
     private void Resize()
@@ -56,7 +56,6 @@ public class Fishing : MonoBehaviour
     {
         if (pause) { return; }
 
-        Randomize();
         Fish();
         Hook();
         ProgressCheck();
@@ -70,7 +69,7 @@ public class Fishing : MonoBehaviour
             fishDestination = UnityEngine.Random.value;
         }
 
-        fishPosition = Mathf.SmoothDamp(fishPosition, fishDestination, ref fishSpeed, smoothMotion);
+        fishPosition = Mathf.SmoothDamp(fishPosition, fishDestination, ref fishSpeed, select.fish.speed);
         fish.position = Vector3.Lerp(PivotBottom.position, PivotTop.position, fishPosition);
     }
 
@@ -106,7 +105,7 @@ public class Fishing : MonoBehaviour
         if (min < fishPosition && fishPosition < max) {
             hookProgress += hookPower * Time.deltaTime;
         } else {
-            hookProgress -= hookDegradation * Time.deltaTime;
+            hookProgress -= select.fish.endurance * Time.deltaTime;
 
             failTimer -= Time.deltaTime;
             if (failTimer < 0f)
@@ -119,14 +118,6 @@ public class Fishing : MonoBehaviour
         }
 
         hookProgress = Mathf.Clamp(hookProgress, 0f, 1f);
-    }
-
-    void Randomize()
-    {
-        //smoothMotion = RANDOMIZE;
-        //hookDegradation = RANDOMIZE;
-        //hookPower = RANDOMIZE;
-        //hookSize = RANDOMIZE;
     }
 
     private void Catched()
