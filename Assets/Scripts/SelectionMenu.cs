@@ -10,6 +10,8 @@ public class SelectionMenu : MonoBehaviour {
     public Fishs fish;
     public FishingRods rod;
     public Baits bait;
+    public Times time;
+    public Weathers weather;
 
     void Awake()
     {

@@ -9,10 +9,10 @@ public class Display : MonoBehaviour
     public Text display;
     public SelectionMenu stats;
 
-    public float speed;
-    public float endurance;
-    public float power;
-    public float size;
+    private float speed;
+    private float endurance;
+    private float power;
+    private float size;
 
     void Start()
     {
@@ -29,9 +29,11 @@ public class Display : MonoBehaviour
 
         if (!stats) return;
         if (stats.fish || stats.rod || stats.bait) display.text = "";
-        if (stats.fish || stats.bait) display.text += "Fish speed : " + speed.ToString() + '\n'
+        if (stats.fish) display.text += "Fish speed : " + speed.ToString() + '\n'
                                         + "Fish endurance : " + endurance.ToString() + '\n';
-        if (stats.rod || stats.bait) display.text += "Hook power : " + power.ToString() + '\n'
-                                        + "Hook size : " + size.ToString();
+        if (stats.rod) display.text += "Hook power : " + power.ToString() + '\n'
+                                        + "Hook size : " + size.ToString() + '\n';
+        if (stats.time) display.text += "Daytime : " + stats.time.ToString().Substring(0, stats.time.ToString().IndexOf(' ')) + '\n';
+        if (stats.weather) display.text += "Weather : " + stats.weather.ToString().Substring(0, stats.weather.ToString().IndexOf(' ')) + '\n';
     }
 }

@@ -8,4 +8,7 @@ public class Fishs : ScriptableObject
 {
     public float speed = 0.0f;
     public float endurance = 0.0f;
+
+    public List<Times> authorizedTimes;
+    public List<Weathers> authorizedWeathers;
 }

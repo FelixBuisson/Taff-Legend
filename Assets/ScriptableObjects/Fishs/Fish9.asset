@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   endurance: 5
+  authorizedTimes:
+  - {fileID: 11400000, guid: 9f40e7d4d85f59b42b7d761338f015af, type: 2}
+  authorizedWeathers:
+  - {fileID: 11400000, guid: 2d25e383fbf806f4795ff2a58280ee57, type: 2}
