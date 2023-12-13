@@ -8,6 +8,7 @@ public class SelectButton : MonoBehaviour
 {
     [SerializeField] private Fishs fish;
     [SerializeField] private FishingRods rod;
+    [SerializeField] private Baits bait;
     private SelectionMenu select;
 
     void Start()
@@ -19,5 +20,6 @@ public class SelectButton : MonoBehaviour
     {
         if (fish) select.fish = fish;
         if (rod) select.rod = rod;
+        if (bait) select.bait = bait;
     }
 }

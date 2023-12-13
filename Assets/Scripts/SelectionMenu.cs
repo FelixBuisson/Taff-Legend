@@ -9,6 +9,7 @@ public class SelectionMenu : MonoBehaviour {
     public static SelectionMenu Instance => instance;
     public Fishs fish;
     public FishingRods rod;
+    public Baits bait;
 
     void Awake()
     {

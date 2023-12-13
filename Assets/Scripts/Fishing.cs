@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Fishing : MonoBehaviour
 {
@@ -46,7 +48,7 @@ public class Fishing : MonoBehaviour
         float ySize = b.size.y;
         Vector3 ls = hook.localScale;
         float distance = Vector3.Distance(PivotTop.position, PivotBottom.position);
-        ls.y = (distance / ySize * select.rod.size);
+        ls.y = (distance / ySize * (select.rod.size + select.bait.bonusSize));
         hook.localScale = ls;
     }
 
@@ -67,7 +69,7 @@ public class Fishing : MonoBehaviour
             fishDestination = UnityEngine.Random.value;
         }
 
-        fishPosition = Mathf.SmoothDamp(fishPosition, fishDestination, ref fishSpeed, select.fish.speed);
+        fishPosition = Mathf.SmoothDamp(fishPosition, fishDestination, ref fishSpeed, (select.fish.speed + select.bait.malusSpeed));
         fish.position = Vector3.Lerp(PivotBottom.position, PivotTop.position, fishPosition);
     }
 
@@ -80,14 +82,14 @@ public class Fishing : MonoBehaviour
 
         hookPosition += hookPullVeloc;
 
-        if (hookPosition - select.rod.size / 2 < 0f && hookPullVeloc < 0f) {
+        if (hookPosition - (select.rod.size + select.bait.bonusSize) / 2 < 0f && hookPullVeloc < 0f) {
             hookPullVeloc = 0f;
         }
-        if (hookPosition + select.rod.size / 2 >= 1f && hookPullVeloc > 0f) {
+        if (hookPosition + (select.rod.size + select.bait.bonusSize) / 2 >= 1f && hookPullVeloc > 0f) {
             hookPullVeloc = 0f;
         }
 
-        hookPosition = Mathf.Clamp(hookPosition, select.rod.size/2, 1 - select.rod.size/2);
+        hookPosition = Mathf.Clamp(hookPosition, (select.rod.size + select.bait.bonusSize)/2, 1 - (select.rod.size + select.bait.bonusSize)/2);
         hook.position = Vector3.Lerp(PivotBottom.position, PivotTop.position, hookPosition);
     }
 
@@ -97,13 +99,13 @@ public class Fishing : MonoBehaviour
         ls.y = hookProgress;
         ProgressBarContainer.localScale = ls;
 
-        float min = hookPosition - select.rod.size / 2;
-        float max = hookPosition + select.rod.size / 2;
+        float min = hookPosition - (select.rod.size + select.bait.bonusSize) / 2;
+        float max = hookPosition + (select.rod.size + select.bait.bonusSize) / 2;
 
         if (min < fishPosition && fishPosition < max) {
-            hookProgress += select.rod.power * Time.deltaTime;
+            hookProgress += (select.rod.power + select.bait.bonusPower) * Time.deltaTime;
         } else {
-            hookProgress -= select.fish.endurance * Time.deltaTime;
+            hookProgress -= (select.fish.endurance + select.bait.malusEndurance) * Time.deltaTime;
 
             failTimer -= Time.deltaTime;
             if (failTimer < 0f)
@@ -122,11 +124,13 @@ public class Fishing : MonoBehaviour
     {
         pause = true;
         Debug.Log("Fish catched !");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     private void Escaped()
     {
         pause = true;
         Debug.Log("Fish escaped !");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }
