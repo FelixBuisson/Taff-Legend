@@ -441,7 +441,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 578545339}
@@ -470,13 +470,9 @@ MonoBehaviour:
   PivotBottom: {fileID: 1946073745}
   fish: {fileID: 1848624059}
   timerMultiplicator: 3
-  smoothMotion: 1
   hook: {fileID: 216063070}
-  hookSize: 0.1
-  hookPower: 1
   hookPullPower: 0.01
   hookGravityPower: 0.005
-  hookDegradation: 1
   hookSpriteRenderer: {fileID: 216063071}
   ProgressBarContainer: {fileID: 1134352635}
   failTimer: 30

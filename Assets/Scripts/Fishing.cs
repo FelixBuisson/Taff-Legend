@@ -36,11 +36,6 @@ public class Fishing : MonoBehaviour
 
     static private SelectionMenu select;
 
-    private float finalSpeed = select.fish.speed + select.bait.malusSpeed;
-    private float finalEndurance = select.fish.endurance + select.bait.malusEndurance;
-    private float finalPower = select.rod.power + select.bait.bonusPower;
-    private float finalSize = select.rod.size + select.bait.bonusSize;
-
     private void Start()
     {
         hookPosition = 3f;
@@ -53,7 +48,7 @@ public class Fishing : MonoBehaviour
         float ySize = b.size.y;
         Vector3 ls = hook.localScale;
         float distance = Vector3.Distance(PivotTop.position, PivotBottom.position);
-        ls.y = (distance / ySize * finalSize);
+        ls.y = (distance / ySize * select.rod.size); // + select.bait.bonusSize
         hook.localScale = ls;
     }
 
@@ -74,7 +69,7 @@ public class Fishing : MonoBehaviour
             fishDestination = UnityEngine.Random.value;
         }
 
-        fishPosition = Mathf.SmoothDamp(fishPosition, fishDestination, ref fishSpeed, finalSpeed);
+        fishPosition = Mathf.SmoothDamp(fishPosition, fishDestination, ref fishSpeed, select.fish.speed); // + select.bait.malusSpeed
         fish.position = Vector3.Lerp(PivotBottom.position, PivotTop.position, fishPosition);
     }
 
@@ -87,14 +82,14 @@ public class Fishing : MonoBehaviour
 
         hookPosition += hookPullVeloc;
 
-        if (hookPosition - finalSize / 2 < 0f && hookPullVeloc < 0f) {
+        if (hookPosition - select.rod.size / 2 < 0f && hookPullVeloc < 0f) { // + select.bait.bonusSize
             hookPullVeloc = 0f;
         }
-        if (hookPosition + finalSize / 2 >= 1f && hookPullVeloc > 0f) {
+        if (hookPosition + select.rod.size / 2 >= 1f && hookPullVeloc > 0f) { // + select.bait.bonusSize
             hookPullVeloc = 0f;
         }
 
-        hookPosition = Mathf.Clamp(hookPosition, finalSize/2, 1 - finalSize/2);
+        hookPosition = Mathf.Clamp(hookPosition, select.rod.size/2, 1 - select.rod.size/2); // + select.bait.bonusSize  + select.bait.bonusSize
         hook.position = Vector3.Lerp(PivotBottom.position, PivotTop.position, hookPosition);
     }
 
@@ -104,13 +99,13 @@ public class Fishing : MonoBehaviour
         ls.y = hookProgress;
         ProgressBarContainer.localScale = ls;
 
-        float min = hookPosition - finalSize / 2;
-        float max = hookPosition + finalSize / 2;
+        float min = hookPosition - select.rod.size / 2; // + select.bait.bonusSize
+        float max = hookPosition + select.rod.size / 2; // + select.bait.bonusSize
 
         if (min < fishPosition && fishPosition < max) {
-            hookProgress += finalPower * Time.deltaTime;
+            hookProgress += select.rod.power * Time.deltaTime; // + select.bait.bonusPower   / 10
         } else {
-            hookProgress -= finalEndurance * Time.deltaTime;
+            hookProgress -= (select.fish.endurance * Time.deltaTime) / 100 ; // + select.bait.malusEndurance
 
             failTimer -= Time.deltaTime;
             if (failTimer < 0f)
@@ -130,6 +125,7 @@ public class Fishing : MonoBehaviour
         pause = true;
         Debug.Log("Fish catched !");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.SetActiveScene(SceneManager.GetActiveScene());
     }
 
     private void Escaped()
@@ -137,5 +133,6 @@ public class Fishing : MonoBehaviour
         pause = true;
         Debug.Log("Fish escaped !");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.SetActiveScene(SceneManager.GetActiveScene());
     }
 }

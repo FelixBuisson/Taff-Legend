@@ -27,4 +27,10 @@ public class SelectionMenu : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    public void QuitDemo()
+    {
+        Debug.Log("Quit");
+        Application.Quit();
+    }
+
 }
